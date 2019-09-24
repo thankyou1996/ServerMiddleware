@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{3B492101-6E27-4DA5-8573-85942E9E628C}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>ServerMiddleware</RootNamespace>
+    <AssemblyName>ServerMiddleware</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="HPSocketCS, Version=5.0.2.42, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\HP-Socket.5.0.2\lib\net40\HPSocketCS.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.6.7\lib\net40-client\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="SqlSugar, Version=4.9.9.11, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\sqlSugar.4.9.9.11\lib\SqlSugar.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="FrmMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmMain.Designer.cs">
+      <DependentUpon>FrmMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FrmMain.resx">
+      <DependentUpon>FrmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Content Include="HPSockertx64\HPSocket4C-SSL_U.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="HPSockertx64\HPSocket4C_U.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="HPSockertx86\HPSocket4C-SSL_U.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="HPSockertx86\HPSocket4C_U.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="HPSockertx64\ssl-cert\ca.crt" />
+    <None Include="HPSockertx64\ssl-cert\ca.key" />
+    <None Include="HPSockertx64\ssl-cert\ca.pem" />
+    <None Include="HPSockertx64\ssl-cert\client.cer" />
+    <None Include="HPSockertx64\ssl-cert\client.crt" />
+    <None Include="HPSockertx64\ssl-cert\client.csr" />
+    <None Include="HPSockertx64\ssl-cert\client.key" />
+    <None Include="HPSockertx64\ssl-cert\client.pem" />
+    <None Include="HPSockertx64\ssl-cert\server.cer" />
+    <None Include="HPSockertx64\ssl-cert\server.crt" />
+    <None Include="HPSockertx64\ssl-cert\server.csr" />
+    <None Include="HPSockertx64\ssl-cert\server.key" />
+    <None Include="HPSockertx64\ssl-cert\server.pem" />
+    <None Include="HPSockertx86\ssl-cert\ca.crt" />
+    <None Include="HPSockertx86\ssl-cert\ca.key" />
+    <None Include="HPSockertx86\ssl-cert\ca.pem" />
+    <None Include="HPSockertx86\ssl-cert\client.cer" />
+    <None Include="HPSockertx86\ssl-cert\client.crt" />
+    <None Include="HPSockertx86\ssl-cert\client.csr" />
+    <None Include="HPSockertx86\ssl-cert\client.key" />
+    <None Include="HPSockertx86\ssl-cert\client.pem" />
+    <None Include="HPSockertx86\ssl-cert\server.cer" />
+    <None Include="HPSockertx86\ssl-cert\server.crt" />
+    <None Include="HPSockertx86\ssl-cert\server.csr" />
+    <None Include="HPSockertx86\ssl-cert\server.key" />
+    <None Include="HPSockertx86\ssl-cert\server.pem" />
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MiddlewareDS\MiddlewareDS.csproj">
+      <Project>{34ea0a47-77f6-4ded-ab8e-a54d6d8fd6f3}</Project>
+      <Name>MiddlewareDS</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

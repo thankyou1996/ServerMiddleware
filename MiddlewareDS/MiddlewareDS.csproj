@@ -59,6 +59,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Agreement.cs" />
     <Compile Include="DBModel\CK_ALARM.cs" />
     <Compile Include="Para.cs" />
     <Compile Include="DBService\CK_ALARM_Service.cs" />

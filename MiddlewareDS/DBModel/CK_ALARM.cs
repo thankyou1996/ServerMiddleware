@@ -8,7 +8,7 @@ namespace MiddlewareDS.DBModel
     ///<summary>
     ///
     ///</summary>
-    //[SugarTable("CK_ALARM")]
+    [SugarTable("CK_ALARM")]
     public partial class CK_ALARM
     {
            public CK_ALARM(){
@@ -20,7 +20,7 @@ namespace MiddlewareDS.DBModel
            /// Default:
            /// Nullable:False
            /// </summary>           
-           //[SugarColumn(IsPrimaryKey=true)]
+           [SugarColumn(IsPrimaryKey=true)]
            public string BJBH {get;set;}
 
            /// <summary>

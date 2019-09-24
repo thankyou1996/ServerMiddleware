@@ -24,7 +24,7 @@ namespace MiddlewareDS.DBService
         {
             Db = new SqlSugar.SqlSugarClient(new ConnectionConfig()
             {
-                ConnectionString = Para.DBConnectStr,
+                ConnectionString = Para.EventDBConnectStr,
                 DbType = DbType.SqlServer,
                 IsAutoCloseConnection = true
             });

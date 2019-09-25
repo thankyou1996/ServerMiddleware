@@ -66,6 +66,7 @@
     <Compile Include="DBService\DbContext.cs" />
     <Compile Include="DBService\IRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="DBModel\T_Test1.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="HPSockertx64\HPSocket4C-SSL_U.dll" />

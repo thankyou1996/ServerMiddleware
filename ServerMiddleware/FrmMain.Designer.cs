@@ -29,51 +29,65 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.txtAddress = new System.Windows.Forms.TextBox();
+            this.txtIpAddress = new System.Windows.Forms.TextBox();
             this.txtPort = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnStart = new System.Windows.Forms.Button();
             this.txtSend = new System.Windows.Forms.TextBox();
             this.btnSend = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.btnStop = new System.Windows.Forms.Button();
+            this.lblClientSataus = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.lbxMsg = new System.Windows.Forms.ListBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.chkSend = new System.Windows.Forms.CheckBox();
+            this.chkRece = new System.Windows.Forms.CheckBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
-            // txtAddress
+            // txtIpAddress
             // 
-            this.txtAddress.Location = new System.Drawing.Point(75, 30);
-            this.txtAddress.Name = "txtAddress";
-            this.txtAddress.Size = new System.Drawing.Size(139, 21);
-            this.txtAddress.TabIndex = 0;
-            this.txtAddress.Text = "192.168.2.18";
+            this.txtIpAddress.Location = new System.Drawing.Point(3, 11);
+            this.txtIpAddress.Name = "txtIpAddress";
+            this.txtIpAddress.Size = new System.Drawing.Size(139, 21);
+            this.txtIpAddress.TabIndex = 0;
+            this.txtIpAddress.Text = "192.168.2.18";
             // 
             // txtPort
             // 
-            this.txtPort.Location = new System.Drawing.Point(220, 30);
+            this.txtPort.Location = new System.Drawing.Point(148, 11);
             this.txtPort.Name = "txtPort";
-            this.txtPort.Size = new System.Drawing.Size(100, 21);
+            this.txtPort.Size = new System.Drawing.Size(57, 21);
             this.txtPort.TabIndex = 0;
             this.txtPort.Text = "6800";
             // 
-            // button1
+            // btnStart
             // 
-            this.button1.Location = new System.Drawing.Point(335, 28);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.Button1_Click);
+            this.btnStart.Location = new System.Drawing.Point(211, 9);
+            this.btnStart.Name = "btnStart";
+            this.btnStart.Size = new System.Drawing.Size(75, 23);
+            this.btnStart.TabIndex = 1;
+            this.btnStart.Text = "连接";
+            this.btnStart.UseVisualStyleBackColor = true;
+            this.btnStart.Click += new System.EventHandler(this.btnConnect_Click);
             // 
             // txtSend
             // 
-            this.txtSend.Location = new System.Drawing.Point(75, 77);
+            this.txtSend.Location = new System.Drawing.Point(3, 3);
             this.txtSend.Name = "txtSend";
-            this.txtSend.Size = new System.Drawing.Size(245, 21);
+            this.txtSend.Size = new System.Drawing.Size(637, 21);
             this.txtSend.TabIndex = 2;
-            this.txtSend.Text = "aabbcc";
+            this.txtSend.Text = "$8888@@@8888@@@实验中学@@@明溪商会@@@校园报警@@@紧急求助@@@24.88823@@@119.360012@@@rtsp://172.10." +
+    "22.20/video.mts?id=9000233@@@562002@@@350955522001@@@三元分局@@@张先生@@@13799897063|*|" +
+    "";
             // 
             // btnSend
             // 
-            this.btnSend.Location = new System.Drawing.Point(335, 77);
+            this.btnSend.Location = new System.Drawing.Point(646, 1);
             this.btnSend.Name = "btnSend";
             this.btnSend.Size = new System.Drawing.Size(75, 23);
             this.btnSend.TabIndex = 3;
@@ -87,32 +101,149 @@
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // btnStop
+            // 
+            this.btnStop.Location = new System.Drawing.Point(292, 9);
+            this.btnStop.Name = "btnStop";
+            this.btnStop.Size = new System.Drawing.Size(75, 23);
+            this.btnStop.TabIndex = 4;
+            this.btnStop.Text = "关闭";
+            this.btnStop.UseVisualStyleBackColor = true;
+            this.btnStop.Click += new System.EventHandler(this.btnClose_Click);
+            // 
+            // lblClientSataus
+            // 
+            this.lblClientSataus.AutoSize = true;
+            this.lblClientSataus.Location = new System.Drawing.Point(373, 14);
+            this.lblClientSataus.Name = "lblClientSataus";
+            this.lblClientSataus.Size = new System.Drawing.Size(29, 12);
+            this.lblClientSataus.TabIndex = 5;
+            this.lblClientSataus.Text = "状态";
+            // 
+            // label1
+            // 
+            this.label1.Location = new System.Drawing.Point(3, 35);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(709, 28);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "$报警编号@@@报警号码@@@报警单位@@@报警地址@@@报警类别（如：校园报警、银行报警、公交报警等等）@@@报警内容@@@经度@@@纬度@@@视频地址@@@行" +
+    "政区划@@@管辖单位（省厅12位编码）@@@所属分局@@@联系人@@@联系电话|*|";
+            // 
+            // lbxMsg
+            // 
+            this.lbxMsg.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lbxMsg.FormattingEnabled = true;
+            this.lbxMsg.ItemHeight = 12;
+            this.lbxMsg.Location = new System.Drawing.Point(0, 65);
+            this.lbxMsg.Name = "lbxMsg";
+            this.lbxMsg.Size = new System.Drawing.Size(724, 423);
+            this.lbxMsg.TabIndex = 11;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.txtSend);
+            this.panel1.Controls.Add(this.btnSend);
+            this.panel1.Controls.Add(this.label1);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel1.Location = new System.Drawing.Point(0, 488);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(724, 68);
+            this.panel1.TabIndex = 12;
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.label2);
+            this.panel2.Controls.Add(this.textBox1);
+            this.panel2.Controls.Add(this.chkRece);
+            this.panel2.Controls.Add(this.chkSend);
+            this.panel2.Controls.Add(this.txtIpAddress);
+            this.panel2.Controls.Add(this.txtPort);
+            this.panel2.Controls.Add(this.btnStart);
+            this.panel2.Controls.Add(this.lblClientSataus);
+            this.panel2.Controls.Add(this.btnStop);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel2.Location = new System.Drawing.Point(0, 0);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(724, 65);
+            this.panel2.TabIndex = 13;
+            // 
+            // chkSend
+            // 
+            this.chkSend.AutoSize = true;
+            this.chkSend.Checked = true;
+            this.chkSend.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkSend.Location = new System.Drawing.Point(5, 40);
+            this.chkSend.Name = "chkSend";
+            this.chkSend.Size = new System.Drawing.Size(72, 16);
+            this.chkSend.TabIndex = 6;
+            this.chkSend.Text = "发送数据";
+            this.chkSend.UseVisualStyleBackColor = true;
+            // 
+            // chkRece
+            // 
+            this.chkRece.AutoSize = true;
+            this.chkRece.Checked = true;
+            this.chkRece.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkRece.Location = new System.Drawing.Point(83, 40);
+            this.chkRece.Name = "chkRece";
+            this.chkRece.Size = new System.Drawing.Size(72, 16);
+            this.chkRece.TabIndex = 6;
+            this.chkRece.Text = "接收数据";
+            this.chkRece.UseVisualStyleBackColor = true;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(231, 37);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(234, 21);
+            this.textBox1.TabIndex = 7;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(172, 41);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(53, 12);
+            this.label2.TabIndex = 8;
+            this.label2.Text = "过滤数据";
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(763, 462);
-            this.Controls.Add(this.btnSend);
-            this.Controls.Add(this.txtSend);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.txtPort);
-            this.Controls.Add(this.txtAddress);
+            this.ClientSize = new System.Drawing.Size(724, 556);
+            this.Controls.Add(this.lbxMsg);
+            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.panel1);
             this.Name = "FrmMain";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.FrmMain_Load);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.TextBox txtAddress;
+        private System.Windows.Forms.TextBox txtIpAddress;
         private System.Windows.Forms.TextBox txtPort;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnStart;
         private System.Windows.Forms.TextBox txtSend;
         private System.Windows.Forms.Button btnSend;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Button btnStop;
+        private System.Windows.Forms.Label lblClientSataus;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ListBox lbxMsg;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.CheckBox chkSend;
+        private System.Windows.Forms.CheckBox chkRece;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }
 

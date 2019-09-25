@@ -9,12 +9,12 @@ namespace MiddlewareDS
 {
     public class Agreement
     {
-        public static string GetEventCmd(CK_ALARM evInfo)
+        public static string GetEventCmd(T_Test1 cmdContent)
         {
             StringBuilder sbCmd = new StringBuilder();
-            sbCmd.Append("$");
-
-            sbCmd.Append("|*|");
+            //sbCmd.Append("$");
+            sbCmd.Append(cmdContent.NameT);
+            //sbCmd.Append("|*|");
             return sbCmd.ToString();
         }
     }

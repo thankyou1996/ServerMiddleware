@@ -35,5 +35,14 @@ namespace MiddlewareDS
             get;
             set;
         }
+
+        /// <summary>
+        /// 同步标志
+        /// </summary>
+        public static int SyncIDFlag
+        {
+            get;
+            set;
+        }
     }
 }

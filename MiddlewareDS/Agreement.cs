@@ -14,6 +14,10 @@ namespace MiddlewareDS
             StringBuilder sbCmd = new StringBuilder();
             //sbCmd.Append("$");
             sbCmd.Append(cmdContent.NameT);
+            if (Para.CmdAddNewLine)
+            {
+                sbCmd.Append(Environment.NewLine);
+            }
             //sbCmd.Append("|*|");
             return sbCmd.ToString();
         }

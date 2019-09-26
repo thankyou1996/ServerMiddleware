@@ -51,8 +51,10 @@ namespace ServerMiddleware
             MiddlewareDS.Para.ServerAddress = config.AppSettings.Settings["SM_ServerAddress"].Value;
             MiddlewareDS.Para.ServerPort = Convert.ToUInt16(config.AppSettings.Settings["SM_ServerPort"].Value);
             MiddlewareDS.Para.SyncIDFlag = Convert.ToUInt16(config.AppSettings.Settings["SM_SyncIDFlag"].Value);
+            MiddlewareDS.Para.CmdAddNewLine = Convert.ToBoolean(config.AppSettings.Settings["SM_AutoAddNewLine"].Value);
             txtIpAddress.Text = MiddlewareDS.Para.ServerAddress;
             txtPort.Text = Convert.ToString(MiddlewareDS.Para.ServerPort);
+            chkAddNewLine.Checked = MiddlewareDS.Para.CmdAddNewLine;
         }
 
 
@@ -157,7 +159,10 @@ namespace ServerMiddleware
             {
                 return;
             }
-
+            if (chkAddNewLine.Checked)
+            {
+                send += Environment.NewLine;
+            }
             byte[] bytes = Encoding.UTF8.GetBytes(send);
             IntPtr connId = client.ConnectionId;
             // 发送
@@ -197,10 +202,13 @@ namespace ServerMiddleware
                     Para.SyncIDFlag = item.ID;
                     config.AppSettings.Settings["SM_SyncIDFlag"].Value = Convert.ToString(item.ID);
                     config.Save();
-                    Thread.Sleep(30);
+                    Delay_Millisecond(30);
                 }
                 else if (!client.IsStarted)
                 {
+                    string strMsg = string.Format("$ ({0}) Send Fail --> {1} ({2})", client.ConnectionId, item.NameT, item.NameT.Length);
+                    AddLog(strMsg);
+                    AddMsg(strMsg);
                     timer1.Enabled = true;
                     return;
                 }
@@ -261,5 +269,48 @@ namespace ServerMiddleware
             this.btnSend.Enabled = (appState == AppState.Started);
         }
 
+        private void btnDBTest_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DbContext<T_Test1> db = new DbContext<T_Test1>();
+                List<T_Test1> Temp_lstEvent = db.GetList(item => item.ID > Para.SyncIDFlag);
+                MessageBox.Show("数据库正常");
+            }
+            catch(Exception ex)
+            {
+                string strMsg = "数据库异常" + Environment.NewLine + ex.ToString();
+                MessageBox.Show(strMsg);
+            }
+        }
+
+
+        /// <summary>
+        /// 延时操作_毫秒
+        /// </summary>
+        /// <param name="Millisecond"></param>
+        public static void Delay_Millisecond(int Millisecond)
+        {
+            DateTime current = DateTime.Now;
+            while (current.AddMilliseconds(Millisecond) > DateTime.Now)
+            {
+                Application.DoEvents();
+            }
+            return;
+        }
+
+        private void FrmMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //client.
+            client.Stop();
+        }
+
+        private void chkAddNewLine_CheckedChanged(object sender, EventArgs e)
+        {
+            Configuration config = ConfigurationManager.OpenExeConfiguration(file);
+            Para.CmdAddNewLine = chkAddNewLine.Checked;
+            config.AppSettings.Settings["SM_AutoAddNewLine"].Value = Convert.ToString(Para.CmdAddNewLine).ToLower();
+            config.Save();
+        }
     }
 }

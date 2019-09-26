@@ -44,5 +44,13 @@ namespace MiddlewareDS
             get;
             set;
         }
+
+
+
+        public static bool CmdAddNewLine
+        {
+            get;
+            set;
+        }
     }
 }

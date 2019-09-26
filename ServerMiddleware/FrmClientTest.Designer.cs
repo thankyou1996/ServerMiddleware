@@ -1,6 +1,6 @@
 ﻿namespace ServerMiddleware
 {
-    partial class FrmMain
+    partial class FrmClientTest
     {
         /// <summary>
         /// 必需的设计器变量。
@@ -45,7 +45,6 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.chkRece = new System.Windows.Forms.CheckBox();
             this.chkSend = new System.Windows.Forms.CheckBox();
-            this.chkAddNewLine = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -144,7 +143,6 @@
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.chkAddNewLine);
             this.panel2.Controls.Add(this.btnDBTest);
             this.panel2.Controls.Add(this.label2);
             this.panel2.Controls.Add(this.textBox1);
@@ -210,18 +208,7 @@
             this.chkSend.Text = "发送数据";
             this.chkSend.UseVisualStyleBackColor = true;
             // 
-            // chkAddNewLine
-            // 
-            this.chkAddNewLine.AutoSize = true;
-            this.chkAddNewLine.Location = new System.Drawing.Point(640, 39);
-            this.chkAddNewLine.Name = "chkAddNewLine";
-            this.chkAddNewLine.Size = new System.Drawing.Size(72, 16);
-            this.chkAddNewLine.TabIndex = 10;
-            this.chkAddNewLine.Text = "自动换行";
-            this.chkAddNewLine.UseVisualStyleBackColor = true;
-            this.chkAddNewLine.CheckedChanged += new System.EventHandler(this.chkAddNewLine_CheckedChanged);
-            // 
-            // FrmMain
+            // FrmClientTest
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -229,7 +216,7 @@
             this.Controls.Add(this.lbxMsg);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
-            this.Name = "FrmMain";
+            this.Name = "FrmClientTest";
             this.Text = "服务中间件";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmMain_FormClosing);
             this.Load += new System.EventHandler(this.FrmMain_Load);
@@ -259,7 +246,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button btnDBTest;
-        private System.Windows.Forms.CheckBox chkAddNewLine;
     }
 }
 

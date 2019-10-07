@@ -202,7 +202,7 @@ namespace ServerMiddleware
                     Para.SyncIDFlag = item.ID;
                     config.AppSettings.Settings["SM_SyncIDFlag"].Value = Convert.ToString(item.ID);
                     config.Save();
-                    Delay_Millisecond(30);
+                    Delay_Millisecond(100);
                 }
                 else if (!client.IsStarted)
                 {

@@ -21,6 +21,11 @@ namespace ServerMiddlewareWatchDog
             InitializeComponent();
         }
 
+        private void FrmMain_Load(object sender, EventArgs e)
+        {
+            this.Hide();
+        }
+
         private void timCheck_Tick(object sender, EventArgs e)
         {
 
@@ -79,5 +84,6 @@ namespace ServerMiddlewareWatchDog
             }
             return bolResult;
         }
+
     }
 }

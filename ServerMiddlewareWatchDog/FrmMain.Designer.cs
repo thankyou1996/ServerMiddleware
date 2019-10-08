@@ -42,9 +42,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(441, 294);
+            this.ClientSize = new System.Drawing.Size(369, 88);
             this.Name = "FrmMain";
-            this.Text = "Form1";
+            this.Text = "看门狗程序";
+            this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
+            this.Load += new System.EventHandler(this.FrmMain_Load);
             this.ResumeLayout(false);
 
         }

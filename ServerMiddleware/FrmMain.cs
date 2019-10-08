@@ -42,6 +42,9 @@ namespace ServerMiddleware
             client.OnReceive += new TcpClientEvent.OnReceiveEventHandler(OnReceive);
             client.OnClose += new TcpClientEvent.OnCloseEventHandler(OnClose);
             SetAppState(AppState.Stoped);
+            string ip = txtIpAddress.Text;
+            ushort port = Convert.ToUInt16(txtPort.Text);
+            Connect(ip, port);
         }
 
         public void Init_Config()
@@ -56,8 +59,7 @@ namespace ServerMiddleware
             txtPort.Text = Convert.ToString(MiddlewareDS.Para.ServerPort);
             chkAddNewLine.Checked = MiddlewareDS.Para.CmdAddNewLine;
         }
-
-
+        
         #region Client初始化相关函数
 
         HandleResult OnPrepareConnect(TcpClient sender, IntPtr socket)
@@ -76,6 +78,10 @@ namespace ServerMiddleware
             string strMsg = string.Format(" > [{0},OnConnect]", sender.ConnectionId);
             AddLog(strMsg);
             AddMsg(strMsg);
+            this.BeginInvoke(new EventHandler(delegate
+            {
+                SetAppState(AppState.Started);
+            }));
             return HandleResult.Ok;
         }
 
@@ -110,7 +116,6 @@ namespace ServerMiddleware
                 AddLog(strMsg);
                 AddMsg(strMsg);
             }
-
             else
             {    // 出错了
                 string strMsg = string.Format(" > [{0},OnError] -> OP:{1},CODE:{2}", sender.ConnectionId, enOperation, errorCode);
@@ -120,6 +125,13 @@ namespace ServerMiddleware
             this.BeginInvoke(new EventHandler(delegate
             {
                 SetAppState(AppState.Stoped);
+                Delay_Millisecond(3000);
+                if (!this.IsDisposed)
+                {
+                    string ip = txtIpAddress.Text;
+                    ushort port = Convert.ToUInt16(txtPort.Text);
+                    Connect(ip, port);
+                }
             }));
             return HandleResult.Ok;
         }
@@ -137,7 +149,6 @@ namespace ServerMiddleware
         {
             if (this.lbxMsg.InvokeRequired)
             {
-                // 很帅的调自己
                 this.lbxMsg.Invoke(AddMsgDelegate, msg);
             }
             else
@@ -218,22 +229,9 @@ namespace ServerMiddleware
 
         private void btnConnect_Click(object sender, EventArgs e)
         {
-
             string ip = txtIpAddress.Text;
             ushort port = Convert.ToUInt16(txtPort.Text);
-            SetAppState(AppState.Starting);
-            if (client.Connect(ip, port, false))
-            {
-                SetAppState(AppState.Started);
-                AddLog("Conect OK");
-                AddMsg("Conect OK");
-            }
-            else
-            {
-                SetAppState(AppState.Stoped);
-                AddLog("Connect Fail");
-                AddMsg("Connect Fail");
-            }
+            Connect(ip, port);
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -253,6 +251,24 @@ namespace ServerMiddleware
             SetAppState(AppState.Stoped);
         }
 
+
+        public void Connect(string strIP,ushort uPort)
+        {
+            SetAppState(AppState.Starting);
+            client.Connect(strIP, uPort, true);
+            //if (client.Connect(strIP, uPort, false))
+            //{
+            //    SetAppState(AppState.Started);
+            //    AddLog("Conect OK");
+            //    AddMsg("Conect OK");
+            //}
+            //else
+            //{
+            //    SetAppState(AppState.Stoped);
+            //    AddLog("Connect Fail");
+            //    AddMsg("Connect Fail");
+            //}
+        }
 
 
         /// <summary>

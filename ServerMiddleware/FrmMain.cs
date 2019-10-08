@@ -3,12 +3,15 @@ using MiddlewareDS;
 using MiddlewareDS.DBModel;
 using MiddlewareDS.DBService;
 using NLog;
+using ServerMiddleware.SystemSet;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -33,6 +36,10 @@ namespace ServerMiddleware
         }
         public void Init()
         {
+            if (!WatchDogRunning())
+            {
+                WatchDogStart();
+            }
             // 加个委托显示msg,因为on系列都是在工作线程中调用的,ui不允许直接操作
             AddMsgDelegate = new ShowMsg(AddMsg);
             Init_Config();
@@ -59,7 +66,7 @@ namespace ServerMiddleware
             txtPort.Text = Convert.ToString(MiddlewareDS.Para.ServerPort);
             chkAddNewLine.Checked = MiddlewareDS.Para.CmdAddNewLine;
         }
-        
+
         #region Client初始化相关函数
 
         HandleResult OnPrepareConnect(TcpClient sender, IntPtr socket)
@@ -125,7 +132,7 @@ namespace ServerMiddleware
             this.BeginInvoke(new EventHandler(delegate
             {
                 SetAppState(AppState.Stoped);
-                Delay_Millisecond(3000);
+                CommonMethod.Common.Delay_Millisecond(3000);
                 if (!this.IsDisposed)
                 {
                     string ip = txtIpAddress.Text;
@@ -163,6 +170,81 @@ namespace ServerMiddleware
         }
         #endregion
 
+        #region 数据通讯相关
+
+        /// <summary>
+        /// 连接服务器
+        /// </summary>
+        /// <param name="strIP"></param>
+        /// <param name="uPort"></param>
+        public void Connect(string strIP, ushort uPort)
+        {
+            SetAppState(AppState.Starting);
+            client.Connect(strIP, uPort, true);
+            //if (client.Connect(strIP, uPort, false))
+            //{
+            //    SetAppState(AppState.Started);
+            //    AddLog("Conect OK");
+            //    AddMsg("Conect OK");
+            //}
+            //else
+            //{
+            //    SetAppState(AppState.Stoped);
+            //    AddLog("Connect Fail");
+            //    AddMsg("Connect Fail");
+            //}
+        }
+        #endregion
+
+        #region 看门狗相关
+
+        /// <summary>
+        /// 看门狗是否存在
+        /// </summary>
+        /// <returns></returns>
+        public bool WatchDogRunning()
+        {
+            if ((Process.GetProcessesByName("ServerMiddlewareWatchDog").Length > 0))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// 启动看门狗
+        /// </summary>
+        /// <returns></returns>
+        public bool WatchDogStart()
+        {
+            if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\ServerMiddlewareWatchDog.exe"))
+            {
+                LogManager.GetLogger("WatchDogLog").Log(LogLevel.Info, "运行看门狗程序");
+                Process.Start("ServerMiddlewareWatchDog.exe");
+                return true;
+            }
+            else
+            {
+                LogManager.GetLogger("WatchDogLog").Log(LogLevel.Info, "看门狗程序不存在");
+            }
+            
+            return false;
+        }
+
+        /// <summary>
+        ///关闭看门狗
+        /// </summary>
+        /// <returns></returns>
+        public bool WatchDogStop()
+        {
+            LogManager.GetLogger("WatchDogLog").Log(LogLevel.Info, "停止看门狗程序");
+            CommonMethod.ProcessControl.KillProcess("ServerMiddlewareWatchDog");
+            return true;
+        }
+
+        #endregion
+
+
         private void BtnSend_Click(object sender, EventArgs e)
         {
             string send = this.txtSend.Text;
@@ -194,6 +276,8 @@ namespace ServerMiddleware
         private void timer1_Tick(object sender, EventArgs e)
         {
             timer1.Enabled = false;
+            //写入看门狗日志
+            PubMethod.WriteIniFile(SystemSet_Basic.WatchDogSetIniFilePath, "Basic", "WatchDogFlag", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
             //定时获取数据
             if (!client.IsStarted)//已经连接
             {
@@ -213,7 +297,7 @@ namespace ServerMiddleware
                     Para.SyncIDFlag = item.ID;
                     config.AppSettings.Settings["SM_SyncIDFlag"].Value = Convert.ToString(item.ID);
                     config.Save();
-                    Delay_Millisecond(100);
+                    CommonMethod.Common.Delay_Millisecond(100);
                 }
                 else if (!client.IsStarted)
                 {
@@ -252,24 +336,6 @@ namespace ServerMiddleware
         }
 
 
-        public void Connect(string strIP,ushort uPort)
-        {
-            SetAppState(AppState.Starting);
-            client.Connect(strIP, uPort, true);
-            //if (client.Connect(strIP, uPort, false))
-            //{
-            //    SetAppState(AppState.Started);
-            //    AddLog("Conect OK");
-            //    AddMsg("Conect OK");
-            //}
-            //else
-            //{
-            //    SetAppState(AppState.Stoped);
-            //    AddLog("Connect Fail");
-            //    AddMsg("Connect Fail");
-            //}
-        }
-
 
         /// <summary>
         /// 设置程序状态
@@ -299,26 +365,13 @@ namespace ServerMiddleware
                 MessageBox.Show(strMsg);
             }
         }
-
-
-        /// <summary>
-        /// 延时操作_毫秒
-        /// </summary>
-        /// <param name="Millisecond"></param>
-        public static void Delay_Millisecond(int Millisecond)
-        {
-            DateTime current = DateTime.Now;
-            while (current.AddMilliseconds(Millisecond) > DateTime.Now)
-            {
-                Application.DoEvents();
-            }
-            return;
-        }
+        
 
         private void FrmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            //client.
+            timer1.Enabled = false;
             client.Stop();
+            WatchDogStop();
         }
 
         private void chkAddNewLine_CheckedChanged(object sender, EventArgs e)

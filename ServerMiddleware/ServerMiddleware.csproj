@@ -40,8 +40,14 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CommonMethod">
+      <HintPath>..\dll_Libary\CommonMethod.dll</HintPath>
+    </Reference>
     <Reference Include="HPSocketCS, Version=5.0.2.42, Culture=neutral, processorArchitecture=AMD64">
       <HintPath>..\packages\HP-Socket.5.0.2\lib\net40\HPSocketCS.dll</HintPath>
+    </Reference>
+    <Reference Include="Ini">
+      <HintPath>..\dll_Libary\Ini.dll</HintPath>
     </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>..\packages\NLog.4.6.7\lib\net40-client\NLog.dll</HintPath>
@@ -86,6 +92,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PubMethod.cs" />
+    <Compile Include="SystemSet\PubMethod.cs" />
+    <Compile Include="SystemSet\SystemSet_Basic.cs" />
     <EmbeddedResource Include="FrmClientTest.resx">
       <DependentUpon>FrmClientTest.cs</DependentUpon>
     </EmbeddedResource>

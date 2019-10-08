@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace ServerMiddleware
+namespace ServerMiddlewareWatchDog
 {
     static class Program
     {
@@ -14,11 +14,11 @@ namespace ServerMiddleware
         [STAThread]
         static void Main()
         {
-            LogManager.GetLogger("ServerConnLog").Log(LogLevel.Info, "Program Start");
+            LogManager.GetLogger("WatchDogLog").Log(LogLevel.Info, "看门狗程序启动");
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new FrmMain());
-            LogManager.GetLogger("ServerConnLog").Log(LogLevel.Info, "Program End");
+            LogManager.GetLogger("WatchDogLog").Log(LogLevel.Info, "看门狗程序关闭");
         }
     }
 }
